@@ -3,8 +3,7 @@ from django.utils.timezone import now
 try:
     from django.db import models
 except Exception:
-    print("There was an error loading django modules. Do you have django 
-installed?")
+    print("There was an error loading django modules. Do you have django installed?")
     sys.exit()
 
 from django.conf import settings
@@ -55,8 +54,7 @@ class Learner(models.Model):
 
 # Course model
 class Course(models.Model):
-    name = models.CharField(null=False, max_length=30, default='online 
-course')
+    name = models.CharField(null=False, max_length=30, default='online course')
     image = models.ImageField(upload_to='course_images/')
     description = models.CharField(max_length=1000)
     pub_date = models.DateField(null=True)
@@ -79,10 +77,8 @@ class Lesson(models.Model):
 
 
 # Enrollment model
-# <HINT> Once a user enrolled a class, an enrollment entry should be 
-created between the user and course
-# And we could use the enrollment to track information such as exam 
-submissions
+# <HINT> Once a user enrolled a class, an enrollment entry should be created between the user and course
+# And we could use the enrollment to track information such as exam submissions
 class Enrollment(models.Model):
     AUDIT = 'audit'
     HONOR = 'honor'
@@ -99,10 +95,9 @@ class Enrollment(models.Model):
     rating = models.FloatField(default=5.0)
 
 
-# <HINT> Create a Question Model with:
+    # <HINT> Create a Question Model with:
     # Used to persist question content for a course
-    # Has a One-To-Many (or Many-To-Many if you want to reuse questions) 
-relationship with course
+    # Has a One-To-Many (or Many-To-Many if you want to reuse questions) relationship with course
     # Has a grade point for each question
     # Has question content
     # Other fields and methods you would like to design
@@ -137,6 +132,6 @@ class Choice(models.Model):
 # One submission could have multiple choices
 # One choice could belong to multiple submissions
 class Submission(models.Model):
-   enrollment = models.ManyToManyField(Enrollment, on_delete=models.CASCADE)
-   choices = models.ManyToManyField(Choice, on_delete=models.DO_NOTHING)
+   enrollment = models.ManyToManyField(Enrollment)
+   choices = models.ManyToManyField(Choice)
    #Other fields and methods you would like to design
