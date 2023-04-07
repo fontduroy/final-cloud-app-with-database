@@ -63,7 +63,7 @@
             -->
 
             <!-- A choice submission form example -->
-            <form id="questionform" action="point to a submit view" method="post">
+            <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="post">
                 {% for question in questions %}
                 <div class="card mt-1">
                     <div class="card-header">
