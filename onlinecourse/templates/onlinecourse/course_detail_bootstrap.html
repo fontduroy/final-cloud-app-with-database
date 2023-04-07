@@ -41,9 +41,9 @@
 
     <!-- Page content -->
     <div class="container-fluid">
-            <h2>{{ course.name }}</h2>
+            <h2>{{ object.name }}</h2>
             <div class="card-columns-vertical">
-                {% for lesson in course.lesson_set.all %}
+                {% for lesson in object.lesson_set.all %}
                     <div class="card mt-1">
                         <div class="card-header"><h5>Lesson {{lesson.order|add:1}}: {{lesson.title}}</h5></div>
                         <div class="card-body">{{lesson.content}}</div>
@@ -54,14 +54,18 @@
             <!-- <HINT> Use Bootstrap Collapse to hide exam first, more details could be found here
             https://www.w3schools.com/bootstrap4/bootstrap_collapse.asp-->
 
-            <!--
+            {% for question in questions %}
+                <div class="card mt-1">
+                    <div class="card-header"><h5>{{question.text}}</h5></div>
+                </div>
+            {% endfor %}
 
-            A collapse example here:
+            <!-- A collapse example here: -->
             <div id="exam" class="collapse">
                 Click to expand elements within the collapse div
-                </div>
+            </div>
 
-            -->
+            
 
             <!-- <HINT> If user is authenticated, show course exam with a list of question -->
 
