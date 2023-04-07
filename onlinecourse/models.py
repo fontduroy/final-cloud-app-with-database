@@ -103,7 +103,7 @@ class Enrollment(models.Model):
     # Other fields and methods you would like to design
 class Question(models.Model):
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING) # Foreign key to lesson
-    text = models.CharField(null=False, max_length=1024, default='<missing question text>') # question text
+    text = models.CharField(null=False, max_length=1024, default='') # question text
     grade_point = models.IntegerField(default=0) # question grade/mark
 
     # <HINT> A sample model method to calculate if learner get the score of the question
@@ -124,7 +124,7 @@ class Question(models.Model):
     # Other fields and methods you would like to design
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.DO_NOTHING)
-    text = models.CharField(null=False, max_length=1024, default='<missing choice text>') # question text
+    text = models.CharField(null=False, max_length=1024, default='') # question text
     isCorrect = models.BooleanField(default=False)
 
 # <HINT> The submission model
