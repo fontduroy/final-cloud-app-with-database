@@ -123,9 +123,12 @@ def submit(request, course_id):
 
     choices = extract_answers(request)
 
-    submission = Submission.objects.create(choices=choices, enrollment=enrollment)
+    submission = Submission.objects.create()
+    submission.save()
+    submission.choices.set(choices)
+    submission.enrollment.add(enrollment)
 
-    show_exam_result(request, course_id, submission.pk)
+    return show_exam_result(request, course_id, submission.pk)
 
 
 # <HINT> A example method to collect the selected choices from the exam form from the request object
@@ -147,7 +150,21 @@ def extract_answers(request):
         # Calculate the total score
 def show_exam_result(request, course_id, submission_id):
 
-    return True
+    context = {}
+    course = Course.objects.get(id=course_id)
+    submission = Submission.objects.get(id=submission_id)
+
+    total_points = 0
+
+    for question in course.question_set.all():
+        total_points += question.grade_point
+
+    context["course"] = course
+    context["submission"] = submission
+    context["questions"] = course.question_set.all()
+    context["score"] = 100
+
+    return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
 
 
 
