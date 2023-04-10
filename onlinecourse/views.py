@@ -155,14 +155,24 @@ def show_exam_result(request, course_id, submission_id):
     submission = Submission.objects.get(id=submission_id)
 
     total_points = 0
+    total_correct = 0
 
     for question in course.question_set.all():
         total_points += question.grade_point
+        num_correct_choices = 0
+        this_question_score = 0
+        for choice in question.choice_set.all():
+            if choice.isCorrect:
+                num_correct_choices += 1
+                if choice in submission.choices.all():
+                    this_question_score += 1
+            
+        total_correct += question.grade_point * (this_question_score / num_correct_choices)
 
     context["course"] = course
     context["submission"] = submission
     context["questions"] = course.question_set.all()
-    context["score"] = 100
+    context["score"] = int(round(100 * (total_correct / total_points), 0))
 
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
 
